@@ -1,13 +1,25 @@
 // import { useContext } from "react";
 // import { AppContext } from "../context";
 import { useGlobalContext } from "../context";
+import Loading from "./pageloading";
 import { GoThumbsup } from 'react-icons/go';
 
 
 const Meals = () => {
     // const context = useContext(AppContext)
-    const {meals} = useGlobalContext()
+    const {meals, loading} = useGlobalContext()
 
+    if (loading) {
+        return <section className="section">
+            <Loading/>
+        </section>
+    }
+
+    if (meals.length < 1 ) {
+        return <section className="section">
+            <h4>No meals matched your search term. Please try again.</h4>
+        </section>
+    }
 
     
     return <section className="section-center">

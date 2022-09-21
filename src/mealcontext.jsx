@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const AppContext = React.createContext()
 
-const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
+const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=azzzzz'
 const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
 // Using Fetch API to fetch data from API
@@ -27,9 +27,6 @@ const AppProvider = ({ children }) => {
 
     // Set the ap to show loading while data is been fetched from the API
     const [loading, setLoading] = useState(false)
-
-    // Set state variable for searchTerm
-    const [searchTerm, setSearchTerm] = useState('')
 
     // using axios to fetch data
 
@@ -59,13 +56,10 @@ const AppProvider = ({ children }) => {
 
     useEffect(() => {
 
-        // fetchMeals(allMealsUrl)
-
-        // Set the Url to be dynamic based on searchTerm
-        fetchMeals(`${allMealsUrl}${searchTerm}`)
-    }, [searchTerm])
+        fetchMeals(allMealsUrl)
+    }, [])
     // return <AppContext.Provider value='hello'>
-    return <AppContext.Provider value={{ loading, meals, setSearchTerm }}>
+    return <AppContext.Provider value={{ loading, meals }}>
         {children}
     </AppContext.Provider>
 }
