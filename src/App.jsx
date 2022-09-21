@@ -8,11 +8,10 @@ import './App.css';
 function App() {
   return (
     <main>
-      Meal App
-      <Favorites/>
+      {/* <Favorites/> */}
       <Meals/>
-      <Modal/>
-      <Search/>
+      {/* <Modal/> */}
+      {/* <Search/> */}
       
     </main>
     
