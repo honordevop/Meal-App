@@ -31,6 +31,15 @@ const AppProvider = ({ children }) => {
     // Set state variable for searchTerm
     const [searchTerm, setSearchTerm] = useState('')
 
+    // Set state variable for modal element
+    const [showModal, setShowModal] = useState(false)
+    //SelectedMeal to be displayed in modal
+    const [selectedMeal, setSelectedMeal] = useState(null)
+
+    
+
+  
+
     // using axios to fetch data
 
     const fetchMeals = async (url) => {
@@ -51,21 +60,81 @@ const AppProvider = ({ children }) => {
             }
             
             // console.log(data)
-        } catch (error) {
-            console.log(error)
+        } catch (e) {
+            console.log(e.error)
         }
         setLoading(false)
     }
 
-    useEffect(() => {
 
-        // fetchMeals(allMealsUrl)
+
+    // Funtion for fetching random URL
+    const fetchRandomMeal = ()=> {
+        fetchMeals(randomMealUrl)
+    }
+
+    //Function for modal meal display
+    const selectMeal = (idMeal, favoriteMeal)=>{
+        let meal;
+        if (favoriteMeal) {
+            meal = favorites.find((meal)=>meal.idMeal === idMeal)
+        } else {
+            meal = meals.find((meal)=>meal.idMeal === idMeal)
+        }
+        // console.log(idMeal)
+        setSelectedMeal(meal)
+        setShowModal(true)
+    }
+
+    // Funtion to retrieve favorite meal from localStorage if it exist
+    const getFavoritesFromLocalStorage = () =>{
+        let favorites = localStorage.getItem('favorites');
+        if (favorites) {
+            favorites = JSON.parse(localStorage.getItem('favorites'))
+        } else {
+            favorites = []
+        }
+        return favorites
+    }
+
+    //Set State variable to show fovourites
+    const [favorites, setFavorites] = useState(getFavoritesFromLocalStorage())
+
+    //Function for favorite meal
+    const addToFavorites = (idMeal) => {
+        // console.log(idMeal)
+        
+        const alreadyFavorite = favorites.find((meal) => meal.idMeal === idMeal);
+        if (alreadyFavorite) return
+        const meal = meals.find((meal) => meal.idMeal == idMeal);
+        const updatedFavorites = [...favorites, meal]
+        setFavorites(updatedFavorites)
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+    }
+    const removeFromFavorites = (idMeal) => {
+        const updatedFavorites = favorites.filter((meal) => meal.idMeal !== idMeal);
+        setFavorites(updatedFavorites)
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+    }
+
+    const closeModal = ()=> {
+        setShowModal(false)
+    }
+
+    useEffect(() => {
+        fetchMeals(allMealsUrl)
+    }, [])
+
+    useEffect(() => {
+        if (!searchTerm) return  
 
         // Set the Url to be dynamic based on searchTerm
         fetchMeals(`${allMealsUrl}${searchTerm}`)
     }, [searchTerm])
     // return <AppContext.Provider value='hello'>
-    return <AppContext.Provider value={{ loading, meals, setSearchTerm }}>
+    return <AppContext.Provider value={{ loading, meals, setSearchTerm, 
+    fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal,
+    favorites, addToFavorites, removeFromFavorites }}>
         {children}
     </AppContext.Provider>
 }

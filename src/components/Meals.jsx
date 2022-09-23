@@ -7,7 +7,7 @@ import { GoThumbsup } from 'react-icons/go';
 
 const Meals = () => {
     // const context = useContext(AppContext)
-    const {meals, loading} = useGlobalContext()
+    const {meals, loading, selectMeal, addToFavorites} = useGlobalContext()
 
     if (loading) {
         return <section className="section">
@@ -28,10 +28,10 @@ const Meals = () => {
 
                 // console.log(singleMeal)
                 return <article key={idMeal} className='single-meal'>
-                    <img src={image} alt="" className="img" />
+                    <img src={image} alt="" className="img" onClick={()=> selectMeal(idMeal)} />
                     <footer>
                         <h5>{title}</h5>
-                        <button className="like-btn">
+                        <button className="like-btn" onClick={() => addToFavorites(idMeal)}>
                             <GoThumbsup/>
                         </button>
                     </footer>
