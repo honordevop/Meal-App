@@ -106,7 +106,7 @@ const AppProvider = ({ children }) => {
         
         const alreadyFavorite = favorites.find((meal) => meal.idMeal === idMeal);
         if (alreadyFavorite) return
-        const meal = meals.find((meal) => meal.idMeal == idMeal);
+        const meal = meals.find((meal) => meal.idMeal === idMeal);
         const updatedFavorites = [...favorites, meal]
         setFavorites(updatedFavorites)
         localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
