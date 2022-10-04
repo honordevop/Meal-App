@@ -134,7 +134,7 @@ const AppProvider = ({ children }) => {
     // return <AppContext.Provider value='hello'>
     return <AppContext.Provider value={{ loading, meals, setSearchTerm, 
     fetchRandomMeal, showModal, selectMeal, selectedMeal, closeModal,
-    favorites, addToFavorites, removeFromFavorites }}>
+    favorites, addToFavorites, removeFromFavorites, fetchMeals, allMealsUrl }}>
         {children}
     </AppContext.Provider>
 }

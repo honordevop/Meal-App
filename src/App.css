@@ -231,6 +231,13 @@ ul {
 .remove-btn:hover{
   color:var(--red-dark)
 }
+.home-btn{
+  background:transparent;
+  border:transparent;
+  font-size:1.5rem;
+  cursor:pointer;
+  margin-right: 1rem;
+}
 /* Meals */
 .section,.section-center{
   padding:3rem 0;
